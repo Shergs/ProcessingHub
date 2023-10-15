@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tw-flex tw-justify-center">
+    <div class="tw-w-1/2 tw-mt-20">
+        <!-- Equivalent to col-5 and mt-5 in Bootstrap -->
+        <div class="tw-rounded tw-shadow login-logout-card">
+            <!-- Rounded for card effect, shadow for box-shadow -->
+            <div class="tw-border-b tw-px-4 tw-py-2">
+                <!-- Card header with padding and a bottom border -->
+                <ul class="tw-grid tw-grid-cols-2 tw-border-b">
+                    <li class="tw-col-span-1 tw-mr-4 tw-border-r tw-text-center">
+                        <a class="tw-text-blue-500 tw-hover:text-blue-600" href="/Identity/Account/Login">Log in</a>
+                    </li>
+                    <li class="tw-col-span-1 tw-text-center">
+                        <a class="tw-text-blue-500 tw-hover:text-blue-600" href="/Identity/Account/Register">Register</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tw-p-4">
+                <!-- Card body with padding -->
+                <div class="tw-flex tw-justify-center">
+                    <div class="tw-w-5/6 tw-my-8">
+                        <!-- Equivalent to col-10 and my-4 in Bootstrap -->
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(function (){
+            const currentPage = location.pathname;
+            $('.nav-tabs li a').each(function () {
+                const $this = $(this);
+                if (currentPage.toLowerCase().indexOf($this.attr('href').toLowerCase()) !== -1) {
+                    $this.addClass('active');
+                }
+            })
+        })
+    </script>
+}

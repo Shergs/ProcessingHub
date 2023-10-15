@@ -1,0 +1,48 @@
+﻿@page
+@model RegisterModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Register";
+}
+<div class="form-container tw-w-1/2">
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <h2 class="tw-text-2xl tw-font-semibold tw-mb-4">Create a new account.</h2>
+    <hr class="tw-border-t tw-border-gray-300 tw-mb-4" />
+    <div asp-validation-summary="ModelOnly" class="tw-text-red-500"></div>
+    <div class="tw-flex tw-flex-wrap tw--mx-2">
+        <div class="tw-w-1/2 tw-px-2">
+            <div class="tw-relative tw-mb-4">
+                <label asp-for="Input.FirstName" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+                <input asp-for="Input.FirstName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="first name" aria-required="true" placeholder="First Name" />
+            </div>
+        </div>
+        <div class="tw-w-1/2 tw-px-2">
+            <div class="tw-relative tw-mb-4">
+                <label asp-for="Input.LastName" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+                <input asp-for="Input.LastName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="last name" aria-required="true" placeholder="Last Name" />
+            </div>
+        </div>
+    </div>
+    <div class="tw-relative tw-mb-4">
+        <label asp-for="Input.Email" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+        <input asp-for="Input.Email" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" placeholder="Email" autocomplete="username" aria-required="true" />
+        <span asp-validation-for="Input.Email" class="tw-text-red-500"></span>
+    </div>
+    <div class="tw-relative tw-mb-4">
+        <label asp-for="Input.Password" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+        <input asp-for="Input.Password" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="new-password" aria-required="true" placeholder="Password" />
+        <span asp-validation-for="Input.Password" class="tw-text-red-500"></span>
+    </div>
+    <div class="tw-relative tw-mb-4">
+        <label asp-for="Input.ConfirmPassword" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+        <input asp-for="Input.ConfirmPassword" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+        <span asp-validation-for="Input.ConfirmPassword" class="tw-text-red-500"></span>
+    </div>
+    <button id="registerSubmit" type="submit" class="tw-w-full tw-py-2 tw-px-4 tw-bg-blue-500 tw-text-white tw-rounded-lg tw-hover:bg-blue-600 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-blue-300">Register</button>
+</form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
