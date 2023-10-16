@@ -15,7 +15,7 @@
         @{
             var currentPage = Context.Request.Path.Value?.ToLower() ?? string.Empty;
         }
-        @if (!currentPage.StartsWith("/identity/account/login") && !currentPage.StartsWith("/identity/account/register"))
+        @if (!currentPage.StartsWith("/identity/account/login") && !currentPage.StartsWith("/identity/account/register") && !currentPage.StartsWith("/identity/account/forgotpassword"))
         {
             <nav class="tw-bg-gray-100 tw-border-gray-200 tw-dark:bg-gray-900">
                 <div class="tw-w-full tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-mx-auto tw-p-4">

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sherg\\source\\repos\\Basic\\Basic\\Basic.csproj": {}
+    "C:\\Users\\sherg\\source\\repos\\ProcessingHub\\Basic\\Basic\\Basic.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sherg\\source\\repos\\Basic\\Basic\\Basic.csproj": {
+    "C:\\Users\\sherg\\source\\repos\\ProcessingHub\\Basic\\Basic\\Basic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sherg\\source\\repos\\Basic\\Basic\\Basic.csproj",
+        "projectUniqueName": "C:\\Users\\sherg\\source\\repos\\ProcessingHub\\Basic\\Basic\\Basic.csproj",
         "projectName": "Basic",
-        "projectPath": "C:\\Users\\sherg\\source\\repos\\Basic\\Basic\\Basic.csproj",
+        "projectPath": "C:\\Users\\sherg\\source\\repos\\ProcessingHub\\Basic\\Basic\\Basic.csproj",
         "packagesPath": "C:\\Users\\sherg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sherg\\source\\repos\\Basic\\Basic\\obj\\",
+        "outputPath": "C:\\Users\\sherg\\source\\repos\\ProcessingHub\\Basic\\Basic\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\sherg\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -56,6 +52,10 @@
               "target": "Package",
               "version": "[6.0.23, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.23, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

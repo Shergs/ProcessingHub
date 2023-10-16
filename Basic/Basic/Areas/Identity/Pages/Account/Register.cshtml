@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Register";
 }
+@*
 <div class="form-container tw-w-1/2">
 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
     <h2 class="tw-text-2xl tw-font-semibold tw-mb-4">Create a new account.</h2>
@@ -41,6 +42,69 @@
     <button id="registerSubmit" type="submit" class="tw-w-full tw-py-2 tw-px-4 tw-bg-blue-500 tw-text-white tw-rounded-lg tw-hover:bg-blue-600 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-blue-300">Register</button>
 </form>
 </div>
+*@
+
+<section class="tw-bg-gray-50 dark:tw-bg-gray-900">
+    <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto md:tw-h-screen lg:tw-py-0">
+        <a href="/" class="tw-flex tw-items-center tw-mb-6 tw-text-2xl tw-font-semibold tw-text-gray-900 dark:tw-text-white">
+            <img class="tw-w-8 tw-h-8 tw-mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
+            Flowbite
+        </a>
+        <div class="tw-w-full tw-bg-white tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md xl:tw-p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
+            <div class="tw-p-6 tw-space-y-4 md:tw-space-y-6 sm:tw-p-8">
+                <h1 class="tw-text-xl tw-font-bold tw-leading-tight tw-tracking-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white">
+                    Create and account
+                </h1>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="tw-flex tw-flex-wrap tw--mx-2">
+                        <div class="tw-w-1/2 tw-px-2">
+                            <div class="tw-relative tw-mb-4">
+                                <label class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+                                <input asp-for="Input.FirstName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="first name" aria-required="true" placeholder="First Name" />
+                                <span asp-validation-for="Input.FirstName" class="tw-text-red-500"></span>
+                            </div>
+                        </div>
+                        <div class="tw-w-1/2 tw-px-2">
+                            <div class="tw-relative tw-mb-4">
+                                <label class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
+                                <input asp-for="Input.LastName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="last name" aria-required="true" placeholder="Last Name" />
+                                <span asp-validation-for="Input.LastName" class="tw-text-red-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Email" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Your email</label>
+                        <input asp-for="Input.Email" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="name@company.com" aria-required="true">
+                        <span asp-validation-for="Input.Email" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Password" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Password</label>
+                        <input asp-for="Input.Password" placeholder="••••••••" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" aria-required="true">
+                        <span asp-validation-for="Input.Password" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.ConfirmPassword" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Confirm password</label>
+                        <input asp-for="Input.ConfirmPassword" id="confirm-password" placeholder="••••••••" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" aria-required="true">
+                        <span asp-validation-for="Input.ConfirmPassword" class="tw-text-red-500"></span>
+                    </div>
+                    <div class="tw-flex tw-items-start">
+                        <div class="tw-flex tw-items-center tw-h-5">
+                            <input id="terms" aria-describedby="terms" type="checkbox" class="tw-w-4 tw-h-4 tw-border tw-border-gray-300 tw-rounded tw-bg-gray-50 focus:tw-ring-3 focus:tw-ring-primary-300 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:focus:tw-ring-primary-600 dark:tw-ring-offset-gray-800" aria-required="true">
+                        </div>
+                        <div class="tw-ml-3 tw-text-sm">
+                            <label for="terms" class="tw-font-light tw-text-gray-500 dark:tw-text-gray-300">I accept the <a class="tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500" href="/">Terms and Conditions</a></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800">Create an account</button>
+                    <p class="tw-text-sm tw-font-light tw-text-gray-500 dark:tw-text-gray-400">
+                        Already have an account? <a href="/" class="tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 @section Scripts {
