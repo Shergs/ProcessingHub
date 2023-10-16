@@ -4,7 +4,8 @@ module.exports = {
       './Pages/**/*.cshtml',
       './Views/**/*.cshtml',
       './Areas/**/**/**/*.cshtml',
-      './Areas/**/**/*.cshtml'
+      './Areas/**/**/*.cshtml',
+      './node_modules/flowbite/**/*.js',
     ],
     prefix: 'tw-',
     darkMode: 'class',
@@ -51,6 +52,8 @@ module.exports = {
             ]
         }
     },
-  plugins: [],
+    plugins: [
+
+    ],
 }
 

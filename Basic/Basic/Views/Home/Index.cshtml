@@ -2,13 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hello There @ViewData["UserId"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-<p class="text-sky-400"> The quick brown fox...</p>
-
-<div class="font-bold text-lg">
-    hello again
+<div class="tw-pt-16">
+    <div class="tw-p-4 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+        <div class="tw-bg-gray-400 tw-col-span-4 tw-row-span-4 tw-rounded-[16px]"></div>
+        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-2 tw-rounded-[16px]"></div>
+        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-4 tw-rounded-[16px]"></div>
+        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-2 tw-rounded-[16px]"></div>
+        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-4 tw-rounded-[16px]"></div>
+        @for(int i=0; i<12; i++)
+        {
+            <div class="tw-bg-gray-400 tw-col-span-4 tw-row-span-4 tw-rounded-[16px]"></div>
+        }
+    </div>
 </div>
