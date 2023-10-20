@@ -544,3 +544,6 @@ C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\runtimes\
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\JetBrains.Annotations.dll
+C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\X.PagedList.dll
+C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\X.PagedList.Mvc.Core.dll

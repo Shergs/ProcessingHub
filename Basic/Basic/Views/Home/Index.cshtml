@@ -1,17 +1,188 @@
-﻿@{
+﻿@model DashboardViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="tw-pt-16">
-    <div class="tw-p-4 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
-        <div class="tw-bg-gray-400 tw-col-span-4 tw-row-span-4 tw-rounded-[16px]"></div>
-        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-2 tw-rounded-[16px]"></div>
-        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-4 tw-rounded-[16px]"></div>
-        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-2 tw-rounded-[16px]"></div>
-        <div class="tw-bg-gray-400 tw-col-span-2 tw-row-span-4 tw-rounded-[16px]"></div>
-        @for(int i=0; i<12; i++)
-        {
-            <div class="tw-bg-gray-400 tw-col-span-4 tw-row-span-4 tw-rounded-[16px]"></div>
-        }
-    </div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
+<div class="tw-pt-16 tw-pb-20">
+    @if (ViewBag.Merchant != null)
+    {
+        <span class="tw-font-bold tw-text-center tw-w-full tw-block tw-pt-4">@ViewBag.Merchant.Name</span>
+
+        <div class="tw-p-4 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+            <div class="tw-col-span-6 tw-row-span-6 tw-border tw-border-gray-400 tw-rounded-[16px] tw-bg-white">
+                <div class="tw-font-bold tw-h-[60px] tw-w-full tw-border-b tw-flex">
+                    <span class="tw-p-4 tw-w-[20%] tw-truncate">Sales</span>
+                    <div class="tw-p-4 tw-w-[80%] tw-flex">
+                        <div date-rangepicker class="tw-flex tw-items-center">
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="start" type="text" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date start">
+                            </div>
+                            <span class="tw-mx-4 tw-text-gray-500">to</span>
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-tw-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="end" type="text" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-h-[calc(100%-60px)]">
+                    <canvas class="tw-w-full tw-p-4" id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="tw-col-span-6 tw-row-span-6 tw-border tw-border-gray-400 tw-rounded-[16px] tw-bg-white">
+                <div class="tw-font-bold tw-h-[60px] tw-w-full tw-border-b tw-flex">
+                    <span class="tw-p-4 tw-w-[20%] tw-truncate">Breakdown</span>
+                    <div class="tw-p-4 tw-w-[80%] tw-flex">
+                        <div date-rangepicker class="tw-flex tw-items-center">
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="start" type="text" class="date-input tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date start">
+                            </div>
+                            <span class="tw-mx-4 tw-text-gray-500">to</span>
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-tw-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="end" type="text" class="date-input tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-h-[calc(100%-60px)]">
+                    <canvas class="tw-w-full tw-p-4" id="myPie"></canvas>
+                </div>
+            </div>
+            <div class="tw-border tw-border-gray-400 tw-rounded-[16px]" style="grid-column: span 12/span 12; grid-row: span 10/span 10;">
+                <div class="tw-font-bold tw-h-[60px] tw-w-full tw-border-b tw-flex">
+                    <span class="tw-p-4 tw-w-[20%] tw-truncate">Recent Transactions</span>
+                    <div class="tw-p-4 tw-w-[80%] tw-flex tw-pl-[330px]">
+                        <a href="/" class="tw-text-sm tw-text-blue-400 tw-pr-4">Search Transactions</a>
+                        <div date-rangepicker class="tw-flex tw-items-center">
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="start" type="text" class="date-input tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date start">
+                            </div>
+                            <span class="tw-mx-4 tw-text-gray-500">to</span>
+                            <div class="tw-relative">
+                                <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                                    <svg class="tw-w-tw-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input name="end" type="text" class="date-input tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 focus:tw-border-blue-500 tw-block tw-w-full tw-pl-10 tw-p-2.5  dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="      Select date end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-h-[calc(100%-60px)] tw-p-4" id="transactions-container">
+                    @if (ViewBag.Merchant != null)
+                    {
+                        @await Html.PartialAsync("_TransactionTablePartial", new TransactionTableViewModel { Transactions = Model.Transactions, MerchantId = ViewBag.Merchant.Id })
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="tw-font-bold tw-text-center tw-justify-center tw-w-full tw-height-full">Select a merchant to see data</div>    
+    }
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['10/09/2023', '10/10/2023', '10/11/2023', '10/12/2023', '10/13/2023', '10/14/2023', '10/15/2023', '10/16/2023'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [10000, 5000, 4000, 15000, 20000, 22000, 20000, 14000, 5000],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('myPie');
+
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Credit', 'Debit', 'Cash Discount'],
+                datasets: [{
+                    label: 'Amount Charged',
+                    data: [23000,5000, 1500],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        $(document).ready(function () {
+            if (document.querySelector('.page-link')) {
+                $(document).on('click', '.page-link', function (e) {
+                    e.preventDefault(); // Prevent default navigation
+
+                    var container = $('#transactions-container'); // The container that wraps your partial
+
+                    $.ajax({
+                        url: this.href,  // The link's URL
+                        method: 'GET',
+                        success: function (data) {
+                            container.html(data);  // Replace the container content with the new partial
+                        },
+                        error: function (error) {
+                            console.error("Failed to fetch the new page", error);
+                        }
+                    });
+                });
+            }
+        });
+
+
+    </script>
+}

@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Basic.Areas.Identity.Data
+@using System.Security.Claims;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@functions {
+    public async Task<string> GetUserType()
+    {
+        var user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+        return user?.Type; // assuming `FirstName` is a property of your user entity
+    }
+}
+
+@{
+    var userType = GetUserType().Result;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (userType == "admin")
+    {
+        <li>
+            @*
+            <form>
+                <label for="default-search" class="tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 tw-sr-only dark:tw-text-white">Search</label>
+                <div class="tw-relative">
+                    <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-3 tw-pointer-events-none">
+                        <svg class="tw-w-4 tw-h-4 tw-text-gray-500 dark:tw-text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="search" id="default-search" class="tw-block tw-w-full tw-p-4 tw-pl-10 tw-text-sm tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded-lg tw-bg-gray-50 focus:tw-ring-blue-500 focus:tw-border-blue-500 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="       Select Merchant" required>
+                    <button type="submit" class="tw-text-white tw-absolute tw-right-2.5 tw-bottom-2.5 tw-bg-blue-700 hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-4 tw-py-2 dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800">Search</button>
+                </div>
+            </form>
+            *@
+            <div class="tw-flex tw-items-center tw-justify-center">
+                <div class="tw-relative tw-group">
+                    <button id="dropdown-button" class="tw-inline-flex tw-justify-center tw-w-full tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-offset-gray-100 focus:tw-ring-blue-500">
+                        <span class="tw-mr-2">Select Merchant</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="tw-w-5 tw-h-5 tw-ml-2 -tw-mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div id="dropdown-menu" class="tw-hidden tw-absolute tw-right-0 tw-mt-2 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-p-1 tw-space-y-1">
+                        <!-- Search input -->
+                        <input id="search-input" class="tw-block tw-w-full tw-px-4 tw-py-2 tw-text-gray-800 tw-border tw-rounded-md  tw-border-gray-300 focus:tw-outline-none" type="text" placeholder="Search items" autocomplete="off">
+                        <!-- Dropdown content goes here -->
+                        @* Make a loop to list all the merchants, set the href to Url.Action to the controller with the correct merchant id*@
+                        @foreach(Merchant merchant in Model.Merchants)
+                        {
+                            <a class="tw-block tw-px-4 tw-py-2 tw-text-gray-700 hover:tw-bg-gray-100 active:tw-bg-blue-100 tw-cursor-pointer tw-rounded-md" href="@Url.Action("Index","Home", new {Area = "", email = merchant.Email})">@merchant.Name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+    else
+    {
+        @*Then display the merchant where the emails match*@
+    
+    }
+
+
+}

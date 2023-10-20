@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Basic.Models;
 
 namespace AuthSystem.Data;
 
@@ -12,6 +13,11 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
     {
 
     }
+    public DbSet<Merchant> Merchants { get; set; } 
+
+    public DbSet<TransactionHistory> TransactionHistories { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

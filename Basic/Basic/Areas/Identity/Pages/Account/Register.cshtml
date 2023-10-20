@@ -53,7 +53,7 @@
         <div class="tw-w-full tw-bg-white tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md xl:tw-p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
             <div class="tw-p-6 tw-space-y-4 md:tw-space-y-6 sm:tw-p-8">
                 <h1 class="tw-text-xl tw-font-bold tw-leading-tight tw-tracking-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white">
-                    Create and account
+                    Create New Merchant Account
                 </h1>
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <div class="tw-flex tw-flex-wrap tw--mx-2">
@@ -71,6 +71,11 @@
                                 <span asp-validation-for="Input.LastName" class="tw-text-red-500"></span>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <label asp-for="Input.MerchantName" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Merchant Name</label>
+                        <input asp-for="Input.MerchantName" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="Merchant Name" aria-required="true">
+                        <span asp-validation-for="Input.MerchantName" class="tw-text-red-500"></span>
                     </div>
                     <div>
                         <label asp-for="Input.Email" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Your email</label>

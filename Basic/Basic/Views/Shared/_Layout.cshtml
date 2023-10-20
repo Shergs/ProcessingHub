@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Basic.Controllers
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,9 +17,9 @@
         @{
             var currentPage = Context.Request.Path.Value?.ToLower() ?? string.Empty;
         }
-        @if (!currentPage.StartsWith("/identity/account/login") && !currentPage.StartsWith("/identity/account/register") && !currentPage.StartsWith("/identity/account/forgotpassword"))
+        @if (!currentPage.StartsWith("/identity/account/login") && !currentPage.StartsWith("/identity/account/register") && !currentPage.StartsWith("/identity/account/forgotpassword") && !currentPage.StartsWith("/identity/account/manage"))
         {
-            <nav class="tw-bg-gray-100 tw-border-gray-200 dark:tw-bg-gray-900 tw-fixed tw-top-0 tw-left-0 tw-w-full">
+            <nav class="tw-bg-gray-100 tw-border-gray-200 dark:tw-bg-gray-900 tw-fixed tw-top-0 tw-left-0 tw-w-full tw-z-40">
                 <div class="tw-w-full tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-mx-auto tw-p-4">
                     <a class="tw-flex tw-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="https://flowbite.com/docs/images/logo.svg" class="tw-h-8 tw-mr-3" alt="Flowbite Logo" />
@@ -25,30 +27,56 @@
                     </a>
                     <button id="test-btn" data-collapse-toggle="navbar-default" type="button" class="md:tw-hidden tw-inline-flex tw-items-center tw-p-2 tw-w-10 tw-h-10 tw-justify-center tw-text-sm tw-text-gray-500 tw-rounded-lg md:tw-hidden hover:tw-bg-gray-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
                         <span class="tw-sr-only">Open main menu</span>
-                        <svg class="tw-w-5 tw-h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <svg class="tw-w-8 tw-h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
                         </svg>
                     </button>
-                    <div class="tw-hidden tw-w-auto md:tw-block tw-md:w-auto" id="navbar-default">
-                        <ul class="!tw-bg-gray-100 tw-font-medium tw-flex tw-flex-col tw-p-4 md:tw-p-0 tw-mt-4 tw-border tw-border-gray-100 tw-rounded-lg md:tw-flex-row md:tw-space-x-8 md:tw-mt-0 md:tw-border-0 md:tw-bg-white">
+                    <div class="tw-hidden tw-w-auto md:tw-block md:tw-w-auto" id="navbar-default">
+                        <ul class="!tw-bg-gray-100 tw-font-medium tw-flex tw-flex-col tw-p-4 md:tw-p-0 tw-mt-4 tw-border tw-border-gray-100 tw-rounded-lg md:tw-flex-row md:tw-space-x-8 md:tw-mt-0 md:tw-border-0 md:tw-bg-white dark:md:tw-bg-gray-800">
+                            @*<partial name="_MerchantSearchPartial.cshtml"></partial>*@
+                            @await Html.PartialAsync("_MerchantSearchPartial", new MerchantSearchPartialViewModel { Merchants = ViewBag.Merchants })
+                            <li>
+                                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="tw-text-white !tw-bg-blue-700 hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center tw-inline-flex tw-items-center dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800" type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" /></svg>
+                                        <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                    </svg>
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div id="dropdown" class="tw-z-10 tw-hidden tw-bg-white tw-divide-y tw-divide-gray-100 tw-rounded-lg tw-shadow tw-w-44 dark:tw-bg-gray-700">
+                                    <ul class="tw-py-2 tw-text-sm tw-text-gray-700 dark:tw-text-gray-200" aria-labelledby="dropdownDefaultButton">
+                                        <partial name="_LoginPartial.cshtml"></partial>
+                                    </ul>
+                                </div>
+                            </li>
+                            @*<li>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" /></svg>
+                                <partial name="_LoginPartial.cshtml"></partial>
+                            </li>
+                            *@
+                            @*
                             <li>
                                 <a class="tw-block tw-py-2 tw-pl-3 tw-pr-4 tw-text-gray-900 tw-rounded hover:tw-bg-gray-100 md:hover:tw-bg-transparent md:tw-border-0 md:hover:tw-text-blue-700 md:tw-p-0" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
+                            *@
                             <li>
                                 <a class="tw-block tw-py-2 tw-pl-3 tw-pr-4 tw-text-gray-900 tw-rounded hover:tw-bg-gray-100 md:hover:tw-bg-transparent md:tw-border-0 md:hover:tw-text-blue-700 md:tw-p-0" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
+                            @*
                             <partial name="_LoginPartial.cshtml"></partial>
+                            *@
                         </ul>
                     </div>                    
                 </div>
             </nav>
-            <button id="open-sidebar" data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="tw-fixed tw-left-0 tw-top-[64px] tw-z-40 tw- tw-inline-flex tw-items-center tw-text-sm tw-text-gray-500 tw-rounded-lg tw-hidden hover:tw-bg-gray-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-200 dark:tw-text-gray-400 dark:hover:tw-bg-gray-700 dark:focus:tw-ring-gray-600">
+            <button id="open-sidebar" data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="tw-fixed tw-left-4 tw-top-[72px] tw-z-40 tw- tw-inline-flex tw-items-center tw-text-sm tw-text-gray-500 tw-rounded-lg tw-hidden hover:tw-bg-gray-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-200 dark:tw-text-gray-400 dark:hover:tw-bg-gray-700 dark:focus:tw-ring-gray-600">
                 <span class="tw-sr-only">Open sidebar</span>
                 <svg class="tw-w-6 tw-h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button>
-            <aside id="default-sidebar" class="tw-fixed tw-left-0 tw-top-[64px] tw-z-40 tw-w-64 tw-h-screen tw-transition-transform -tw-translate-x-full sm:tw-translate-x-0" aria-label="Sidenav">
+            <aside id="default-sidebar" class="tw-fixed tw-left-0 !tw-top-[72px] tw-z-40 tw-w-64 tw-h-screen tw-transition-transform -tw-translate-x-full sm:tw-translate-x-0" aria-label="Sidenav">
                 <div id="close-sidebar" class="tw-w-4 tw-h-4 tw-rounded-full tw-bg-gray-500 tw-left-[248px] tw-top-64 tw-fixed hover:tw-bg-gray-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-200 "></div>
                 <div class="tw-overflow-y-auto tw-py-5 tw-px-3 tw-h-full tw-bg-white tw-border-r tw-border-gray-200 dark:tw-bg-gray-800 dark:tw-border-gray-700">
                     <ul class="space-y-2">
@@ -59,20 +87,20 @@
                             </a>
                         </li>
                         <li>
-                            <button type="button" class="tw-flex tw-items-center tw-p-2 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 tw-group hover:tw-bg-gray-100 dark:tw-text-white dark:hover:tw-bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
+                            <button id="pages-dropdown" type="button" class="tw-flex tw-items-center tw-p-2 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 tw-group hover:tw-bg-gray-100 dark:tw-text-white dark:hover:tw-bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
                                 <svg aria-hidden="true" class="tw-flex-shrink-0 tw-w-6 tw-h-6 tw-text-gray-400 tw-transition tw-duration-75 group-hover:tw-text-gray-900 dark:tw-text-gray-400 dark:group-hover:tw-text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                                 <span class="tw-flex-1 tw-ml-3 tw-text-left tw-whitespace-nowrap">Pages</span>
                                 <svg aria-hidden="true" class="tw-w-6 tw-h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                             <ul id="dropdown-pages" class="tw-hidden tw-py-2 tw-space-y-2">
                                 <li>
-                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 group tw-hover:bg-gray-100 dark:tw-text-white dark:tw-hover:bg-gray-700">Settings</a>
+                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 tw-group hover:tw-bg-gray-100 dark:tw-text-white dark:hover:tw-bg-gray-700">Settings</a>
                                 </li>
                                 <li>
-                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 group tw-hover:bg-gray-100 dark:tw-text-white dark:tw-hover:bg-gray-700">Kanban</a>
+                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 tw-group hover:tw-bg-gray-100 dark:tw-text-white dark:hover:tw-bg-gray-700">Kanban</a>
                                 </li>
                                 <li>
-                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 group tw-hover:bg-gray-100 dark:tw-text-white dark:tw-hover:bg-gray-700">Calendar</a>
+                                    <a href="/" class="tw-flex tw-items-center tw-p-2 tw-pl-11 tw-w-full tw-text-base tw-font-normal tw-text-gray-900 tw-rounded-lg tw-transition tw-duration-75 tw-group hover:tw-bg-gray-100 dark:tw-text-white dark:hover:tw-bg-gray-700">Calendar</a>
                                 </li>
                             </ul>
                         </li>
@@ -228,19 +256,47 @@
         }
     </header>
     <div class="container-fluid">
-        <main role="main" class="tw-pb-3">
+        <main role="main" class="tw-bg-white">
             @RenderBody()
         </main>
     </div>
 
+    @*
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container" style="padding-top:40px;">
             &copy; 2023 - Basic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    *@
+    @if (!currentPage.StartsWith("/identity/account/login") && !currentPage.StartsWith("/identity/account/register") && !currentPage.StartsWith("/identity/account/forgotpassword") && !currentPage.StartsWith("/identity/account/manage"))
+    {
+        <footer class="tw-bg-white tw-rounded-lg tw-shadow tw-m-4 dark:tw-bg-gray-800 tw-mt-[-80px]">
+            <div class="tw-w-full tw-mx-auto tw-max-w-screen-xl tw-p-4 md:tw-flex md:tw-items-center md:tw-justify-between">
+            <span class="tw-text-sm tw-text-gray-500 sm:tw-text-center dark:tw-text-gray-400">
+                © 2023 <a href="https://flowbite.com/" class="hover:tw-underline">Processing™</a>. All Rights Reserved.
+            </span>
+            <ul class="tw-flex tw-flex-wrap tw-items-center tw-mt-3 tw-text-sm tw-font-medium tw-text-gray-500 dark:tw-text-gray-400 sm:tw-mt-0">
+                <li>
+                    <a href="/" class="tw-mr-4 hover:tw-underline md:tw-mr-6">About</a>
+                </li>
+                <li>
+                    <a href="/" class="tw-mr-4 hover:tw-underline md:tw-mr-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="/" class="tw-mr-4 hover:tw-underline md:tw-mr-6">Licensing</a>
+                </li>
+                <li>
+                    <a href="/" class="hover:tw-underline">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    }
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
         let navExpanded = false;
@@ -271,6 +327,58 @@
             openSidebar.addEventListener('click', function () {
                 openSidebar.classList.add('tw-hidden');
                 sidebar.classList.remove('tw-hidden');
+            });
+            let pagesOpen = false;
+            const pagesDropdown = document.getElementById('pages-dropdown');
+            const dropdownPages = document.getElementById('dropdown-pages');
+            pagesDropdown.addEventListener('click', function () {
+                if (pagesOpen) {
+                    dropdownPages.classList.add('tw-hidden');
+                    pagesOpen = false;
+                }
+                else {
+                    dropdownPages.classList.remove('tw-hidden');
+                    pagesOpen = true;
+                }
+            });
+        }
+    </script>
+    <script>
+        // JavaScript to toggle the dropdown
+        const dropdownButton = document.getElementById('dropdown-button');
+        console.log('trying to find dropdown');
+        if (dropdownButton) {
+            console.log('dropdown button found!');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            const searchInput = document.getElementById('search-input');
+            let isOpen = false; // Set to true to open the dropdown by default
+
+            // Function to toggle the dropdown state
+            function toggleDropdown() {
+                isOpen = !isOpen;
+                dropdownMenu.classList.toggle('tw-hidden', !isOpen);
+            }
+
+            // Set initial state
+            toggleDropdown();
+
+            dropdownButton.addEventListener('click', () => {
+                toggleDropdown();
+            });
+
+            // Add event listener to filter items based on input
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const items = dropdownMenu.querySelectorAll('a');
+
+                items.forEach((item) => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
             });
         }
     </script>
