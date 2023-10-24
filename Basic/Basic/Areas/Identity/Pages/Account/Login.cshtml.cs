@@ -86,6 +86,11 @@ namespace Basic.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (HttpContext.Session.GetString("Init") == null)
+            {
+                HttpContext.Session.SetString("Init", "true");
+            }
+
             if (User.Identity.IsAuthenticated) {
                 Response.Redirect("/");
             }

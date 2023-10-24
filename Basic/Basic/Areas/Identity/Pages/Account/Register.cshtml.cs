@@ -92,6 +92,41 @@ namespace Basic.Areas.Identity.Pages.Account
             [Display(Name = "Merchant Name")]
             public string MerchantName { get; set; }
 
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Street Address")]
+            public string StreetAddress { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "State")]
+            public string State { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Zip Code")]
+            public string Zip { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Country")]
+            public string ReceiptEmail { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Country")]
+            public string AppPassword { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -124,11 +159,6 @@ namespace Basic.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("/");
-            }
-
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -171,6 +201,14 @@ namespace Basic.Areas.Identity.Pages.Account
                     var merchant = CreateMerchant();
                     merchant.Name = Input.MerchantName;
                     merchant.Email = Input.Email;
+                    merchant.StreetAddress = Input.StreetAddress;
+                    merchant.City = Input.City;
+                    merchant.State = Input.State;
+                    merchant.Zip = Input.Zip;
+                    merchant.Country = Input.Country;
+                    merchant.ReceiptEmail = Input.ReceiptEmail;
+                    merchant.AppPassword = Input.AppPassword;
+
                     // Add merchant to the database
                     _context.Merchants.Add(merchant);
                     await _context.SaveChangesAsync();

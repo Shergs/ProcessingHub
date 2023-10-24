@@ -1,0 +1,40 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@using Humanizer;
+
+@model InvoiceTableViewModel
+
+<table class="table table-bordered table-hover rounded">
+    <thead class="bg-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th class="col">Recipitent</th>
+            <th class="col">Timestamp</th>
+            <!-- Add more columns headers as necessary -->
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Invoices != null)
+        {
+            @foreach (var transaction in Model.Invoices)
+            {
+                <tr>
+                    <td>@transaction.Id</td>
+                    <td>@transaction.Email</td>
+                    <td>@transaction.Timestamp.Humanize()</td>
+                    <!-- Display other properties of the transaction as required -->
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<!-- Pagination controls -->
+<div>
+    @Html.PagedListPager(Model.Invoices, page => Url.Action("PageInvoices", new { page, Model.MerchantId }),
+    new PagedListRenderOptions {
+    LiElementClasses = new string[] { "page-item", "invoice-page-item" },
+    PageClasses = new string[] { "page-link", "invoice-page-link" }
+    })
+</div>
+

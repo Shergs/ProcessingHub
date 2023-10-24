@@ -547,3 +547,4 @@ C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\runtimes\
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\JetBrains.Annotations.dll
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\X.PagedList.dll
 C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\X.PagedList.Mvc.Core.dll
+C:\Users\sherg\source\repos\ProcessingHub\Basic\Basic\bin\Debug\net6.0\DinkToPdf.dll

@@ -1,0 +1,254 @@
+﻿@model SendInvoiceViewModel 
+
+<link rel="stylesheet" href="file:///C:/Users/sherg/source/repos/ProcessingHub/Basic/Basic/wwwroot/css/styles.css">
+
+<!-- Invoice -->
+<div class="tw-max-w-[85rem] tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-mx-auto tw-my-4 sm:tw-my-10">
+    <div class="sm:tw-w-11/12 lg:tw-w-3/4 tw-mx-auto">
+        <!-- Card -->
+        <div class="tw-flex tw-flex-col tw-p-4 tw-p-10 tw-bg-white tw-shadow-md tw-rounded-xl dark:tw-bg-gray-800">
+            <!-- Grid -->
+            <div class="flex justify-between">
+                <div>
+                    <svg class="tw-w-10 tw-h-10" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 26V13C1 6.37258 6.37258 1 13 1C19.6274 1 25 6.37258 25 13C25 19.6274 19.6274 25 13 25H12" class="stroke-blue-600 dark:stroke-white" stroke="currentColor" stroke-width="2" />
+                        <path d="M5 26V13.16C5 8.65336 8.58172 5 13 5C17.4183 5 21 8.65336 21 13.16C21 17.6666 17.4183 21.32 13 21.32H12" class="tw-stroke-blue-600 dark:tw-stroke-white" stroke="currentColor" stroke-width="2" />
+                        <circle cx="13" cy="13.0214" r="5" fill="currentColor" class="tw-fill-blue-600 dark:tw-fill-white" />
+                    </svg>
+
+                    <h1 class="tw-mt-2 tw-text-lg tw-text-xl tw-font-semibold tw-text-blue-600 dark:tw-text-white">Processing</h1>
+                </div>
+                <!-- Col -->
+
+                <div class="tw-text-right">
+                    <h2 class="tw-text-2xl tw-text-3xl tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Invoice #</h2>
+                    @* Add Invoice Id thing here *@
+                    <span class="tw-mt-1 tw-block tw-text-gray-500">3682303</span>
+
+                    @* Import Merchant address, going to be street, city, country, zip *@
+                    <address class="tw-mt-4 tw-not-italic tw-text-gray-800 dark:tw-text-gray-200">
+                        @Model.Merchant.StreetAddress<br>
+                        @Model.Merchant.City<br>
+                        @Model.Merchant.State<br>
+                        @Model.Merchant.Country<br>
+                        @Model.Merchant.Zip<br>
+                    </address>
+                </div>
+                <!-- Col -->
+            </div>
+            <!-- End Grid -->
+            <!-- Grid -->
+            <div class="tw-mt-8 tw-grid tw-grid-cols-2 tw-gap-3">
+                <div>
+                    <h3 class="tw-text-lg tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Bill to:</h3>
+                    <h3 class="tw-text-lg tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Sara Williams</h3>
+                    <address class="tw-mt-2 tw-not-italic tw-text-gray-500">
+                        280 Suzanne Throughway,<br>
+                        Breannabury, OR 45801,<br>
+                        United States<br>
+                    </address>
+                </div>
+                <!-- Col -->
+
+                <div class="tw-text-right tw-space-y-2">
+                    <!-- Grid -->
+                    <div class="tw-grid tw-grid-cols-2 tw-grid-cols-1 tw-gap-3 sm:tw-gap-2">
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Invoice date:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">03/10/2018</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Due date:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">03/11/2018</dd>
+                        </dl>
+                    </div>
+                    <!-- End Grid -->
+                </div>
+                <!-- Col -->
+            </div>
+            <!-- End Grid -->
+            <!-- Table -->
+            
+            <div style="margin-top: 1.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1rem;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="text-transform: uppercase; font-size: 0.75rem; font-weight: 500; color: #a0aec0;">
+                            <th style="text-align: left; width: 65%;">Item</th>
+                            <th style="text-align: left; width: 15%;">Qty</th>
+                            <th style="text-align: right; width: 20%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(InvoiceItemViewModel invoiceItem in Model.InvoiceItems)
+                        {
+                            <tr style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="font-weight: 500; color: #2d3748;">@invoiceItem.Item</td>
+                                <td style="color: #2d3748;">@invoiceItem.Count</td>
+                                <td style="text-align: right; color: #2d3748;">$@invoiceItem.Price</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <!-- End Table -->
+            @*
+            <!-- Table -->
+            <div class="tw-mt-6">
+                <div class="tw-border tw-border-gray-200 tw-p-4 tw-rounded-lg tw-space-y-4 dark:tw-border-gray-700">
+                    <div class="tw-hidden grid grid-cols-5">
+                        <div class="tw-col-span-2 tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Item</div>
+                        <div class="tw-text-left tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Qty</div>
+                        <div class="tw-text-left tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Rate</div>
+                        <div class="tw-text-right tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Amount</div>
+                    </div>
+
+                    <div class="tw-hidden tw-block tw-border-b tw-border-gray-200 tw-border-gray-700"></div>
+
+                    <div class="tw-grid tw-grid-cols-3 tw-grid-cols-5 tw-gap-2">
+                        <div class="tw-col-span-full tw-col-span-2">
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Item</h5>
+                            <p class="tw-font-medium tw-text-gray-800 dark:tw-text-gray-200">Design UX and UI</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Qty</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">1</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Rate</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">5</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Amount</h5>
+                            <p class="tw-text-right tw-text-gray-800 dark:tw-text-gray-200">$500</p>
+                        </div>
+                    </div>
+
+                    <div class="tw-hidden tw-border-b tw-border-gray-200 tw-border-gray-700"></div>
+
+                    <div class="tw-grid tw-grid-cols-3 tw-grid-cols-5 tw-gap-2">
+                        <div class="tw-col-span-full tw-col-span-2">
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Item</h5>
+                            <p class="tw-font-medium tw-text-gray-800 dark:tw-text-gray-200">Web project</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Qty</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">1</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Rate</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">24</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Amount</h5>
+                            <p class="tw-text-right tw-text-gray-800 dark:tw-text-gray-200">$1250</p>
+                        </div>
+                    </div>
+
+                    <div class="tw-hidden tw-border-b tw-border-gray-200 tw-border-gray-700"></div>
+
+                    <div class="tw-grid tw-grid-cols-3 tw-grid-cols-5 tw-gap-2">
+                        <div class="tw-col-span-full tw-col-span-2">
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Item</h5>
+                            <p class="tw-font-medium tw-text-gray-800 dark:tw-text-gray-200">SEO</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Qty</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">1</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Rate</h5>
+                            <p class="tw-text-gray-800 dark:tw-text-gray-200">6</p>
+                        </div>
+                        <div>
+                            <h5 class="tw-hidden tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase">Amount</h5>
+                            <p class="tw-text-right tw-text-gray-800 dark:tw-text-gray-200">$2000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Table -->
+            *@
+            <!-- Flex -->
+            <div class="tw-mt-8 tw-flex tw-justify-end">
+                <div class="tw-w-full tw-max-w-2xl tw-text-right tw-space-y-2">
+                    <!-- Grid -->
+                    <div class="tw-grid tw-grid-cols-2 tw-grid-cols-1 tw-gap-3 tw-gap-2">
+                        @{
+                            double subtotal = Math.Round(Model.InvoiceItems.Sum(item => item.Price * item.Count), 2);
+                            double taxRate = .0865;
+                            double feeRate = .035;
+                            double tax = Math.Round(taxRate * subtotal, 2);  
+                            double fee = Math.Round(feeRate * subtotal, 2);
+                            double total = subtotal + tax + fee;
+
+                            string subtotalDisplay = subtotal.ToString("F2");
+                            string taxDisplay = tax.ToString("F2");  
+                            string feeDisplay = fee.ToString("F2");  
+                            string totalDisplay = total.ToString("F2");
+                        }
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Subtotal:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$@subtotalDisplay</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 tw-dark:text-gray-200">Tax:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$@taxDisplay</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 tw-dark:text-gray-200">@Model.Merchant.FeeName:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$@feeDisplay</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Total:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$@totalDisplay</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Amount paid:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$0.00</dd>
+                        </dl>
+                        <dl class="tw-grid tw-grid-cols-5 tw-gap-x-3">
+                            <dt class="tw-col-span-3 tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Due balance:</dt>
+                            <dd class="tw-col-span-2 tw-text-gray-500">$@total</dd>
+                        </dl>
+                    </div>
+                    <!-- End Grid -->
+                </div>
+            </div>
+            <!-- End Flex -->
+            <div class="tw-mt-8 sm:tw-mt-12">
+                <h4 class="tw-text-lg tw-font-semibold tw-text-gray-800 dark:tw-text-gray-200">Thank you!</h4>
+                <p class="tw-text-gray-500">If you have any questions concerning this invoice, use the following contact information:</p>
+                <div class="tw-mt-2">
+                    <p class="tw-block tw-text-sm tw-font-medium tw-text-gray-800 dark:tw-text-gray-200">support@ScoreProcessing.com</p>
+                    <p class="tw-block tw-text-sm tw-font-medium tw-text-gray-800 dark:tw-text-gray-200">+1 (516) 549-0412</p>
+                </div>
+            </div>
+
+            <p class="tw-mt-5 tw-text-sm tw-text-gray-500">© 2023 Processing.</p>
+        </div>
+        <!-- End Card -->
+        @*
+        <!-- Buttons -->
+        <div class="tw-mt-6 tw-flex tw-justify-end tw-gap-x-3">
+            <a class="tw-inline-flex tw-justify-center tw-items-center tw-gap-x-3 tw-text-sm tw-text-center tw-border hover:tw-border-gray-300 tw-shadow-sm tw-font-medium tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-400 focus:tw-ring-offset-2 focus:tw-ring-offset-white tw-transition tw-py-3 tw-px-4 dark:tw-border-gray-800 dark:hover:tw-border-gray-600 dark:tw-shadow-slate-700/[.7] dark:tw-text-white dark:focus:tw-ring-gray-700 dark:focus:tw-ring-offset-gray-800" href="#">
+                <svg class="tw-w-4 tw-h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z" />
+                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                </svg>
+                PDF
+            </a>
+            <a class="tw-inline-flex tw-justify-center tw-items-center tw-gap-x-3 tw-text-center tw-bg-blue-600 hover:tw-bg-blue-700 tw-border tw-border-transparent tw-text-sm tw-text-white tw-font-medium tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-600 focus:tw-ring-offset-2 focus:tw-ring-offset-white tw-transition tw-py-3 tw-px-4 dark:focus:tw-ring-offset-gray-800" href="#">
+                <svg class="tw-w-4 tw-h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                </svg>
+                Print details
+            </a>
+        </div>
+        <!-- End Buttons -->
+        *@
+    </div>
+</div>
+<!-- End Invoice -->

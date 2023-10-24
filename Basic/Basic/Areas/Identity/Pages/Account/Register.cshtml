@@ -4,51 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Register";
 }
-@*
-<div class="form-container tw-w-1/2">
-<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <h2 class="tw-text-2xl tw-font-semibold tw-mb-4">Create a new account.</h2>
-    <hr class="tw-border-t tw-border-gray-300 tw-mb-4" />
-    <div asp-validation-summary="ModelOnly" class="tw-text-red-500"></div>
-    <div class="tw-flex tw-flex-wrap tw--mx-2">
-        <div class="tw-w-1/2 tw-px-2">
-            <div class="tw-relative tw-mb-4">
-                <label asp-for="Input.FirstName" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
-                <input asp-for="Input.FirstName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="first name" aria-required="true" placeholder="First Name" />
-            </div>
-        </div>
-        <div class="tw-w-1/2 tw-px-2">
-            <div class="tw-relative tw-mb-4">
-                <label asp-for="Input.LastName" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
-                <input asp-for="Input.LastName" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="last name" aria-required="true" placeholder="Last Name" />
-            </div>
-        </div>
-    </div>
-    <div class="tw-relative tw-mb-4">
-        <label asp-for="Input.Email" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
-        <input asp-for="Input.Email" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" placeholder="Email" autocomplete="username" aria-required="true" />
-        <span asp-validation-for="Input.Email" class="tw-text-red-500"></span>
-    </div>
-    <div class="tw-relative tw-mb-4">
-        <label asp-for="Input.Password" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
-        <input asp-for="Input.Password" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="new-password" aria-required="true" placeholder="Password" />
-        <span asp-validation-for="Input.Password" class="tw-text-red-500"></span>
-    </div>
-    <div class="tw-relative tw-mb-4">
-        <label asp-for="Input.ConfirmPassword" class="tw-absolute tw-top-0 tw-left-3 tw-px-1 tw-bg-white tw-text-sm tw-text-gray-500"></label>
-        <input asp-for="Input.ConfirmPassword" class="tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-rounded-md tw-placeholder-gray-400 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:outline-none" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
-        <span asp-validation-for="Input.ConfirmPassword" class="tw-text-red-500"></span>
-    </div>
-    <button id="registerSubmit" type="submit" class="tw-w-full tw-py-2 tw-px-4 tw-bg-blue-500 tw-text-white tw-rounded-lg tw-hover:bg-blue-600 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-blue-300">Register</button>
-</form>
-</div>
-*@
 
 <section class="tw-bg-gray-50 dark:tw-bg-gray-900">
-    <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto md:tw-h-screen lg:tw-py-0">
-        <a href="/" class="tw-flex tw-items-center tw-mb-6 tw-text-2xl tw-font-semibold tw-text-gray-900 dark:tw-text-white">
+    <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto lg:tw-pt-0 tw-mb-6">
+        <a href="/" class="tw-flex tw-items-center tw-my-6 tw-text-2xl tw-font-semibold tw-text-gray-900 dark:tw-text-white">
             <img class="tw-w-8 tw-h-8 tw-mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-            Flowbite
+            Processing
         </a>
         <div class="tw-w-full tw-bg-white tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md xl:tw-p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
             <div class="tw-p-6 tw-space-y-4 md:tw-space-y-6 sm:tw-p-8">
@@ -78,6 +39,47 @@
                         <span asp-validation-for="Input.MerchantName" class="tw-text-red-500"></span>
                     </div>
                     <div>
+                        <label asp-for="Input.StreetAddress" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Street Address</label>
+                        <input asp-for="Input.StreetAddress" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="Street Address" aria-required="true">
+                        <span asp-validation-for="Input.StreetAddress" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.City" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">City</label>
+                        <input asp-for="Input.City" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="City" aria-required="true">
+                        <span asp-validation-for="Input.City" class="tw-text-red-500"></span>
+                    </div>
+                    <div class="tw-flex tw-flex-wrap tw--mx-2">
+                        <div class="tw-w-1/2 tw-px-2">
+                            <div class="tw-relative tw-mb-4">
+                                <label asp-for="Input.State" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">State</label>
+                                <input asp-for="Input.State" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="State" aria-required="true">
+                                <span asp-validation-for="Input.State" class="tw-text-red-500"></span>
+                            </div>
+                        </div>
+                        <div class="tw-w-1/2 tw-px-2">
+                            <div class="tw-relative tw-mb-4">
+                                <label asp-for="Input.Zip" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Zip</label>
+                                <input asp-for="Input.Zip" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="Zip" aria-required="true">
+                                <span asp-validation-for="Input.Zip" class="tw-text-red-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Country" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Country</label>
+                        <input asp-for="Input.Country" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="Country" aria-required="true">
+                        <span asp-validation-for="Input.Country" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.ReceiptEmail" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Receipt Email</label>
+                        <input asp-for="Input.ReceiptEmail" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="Receipt Email" aria-required="true">
+                        <span asp-validation-for="Input.ReceiptEmail" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.AppPassword" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">App Password (No Spaces)                <a class="tw-underline hover:tw-cursor-pointer tw-text-blue-400" href="https://support.google.com/accounts/answer/185833?hl=en" target="_blank">Get App Password</a></label>
+                        <input asp-for="Input.AppPassword" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="App Password" aria-required="true">
+                        <span asp-validation-for="Input.AppPassword" class="tw-text-red-500"></span>
+                    </div>
+                    <div>
                         <label asp-for="Input.Email" class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Your email</label>
                         <input asp-for="Input.Email" class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 sm:tw-text-sm tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="name@company.com" aria-required="true">
                         <span asp-validation-for="Input.Email" class="tw-text-red-500"></span>
@@ -101,9 +103,11 @@
                         </div>
                     </div>
                     <button type="submit" class="tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800">Create an account</button>
+                    @*
                     <p class="tw-text-sm tw-font-light tw-text-gray-500 dark:tw-text-gray-400">
                         Already have an account? <a href="/" class="tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500">Login here</a>
                     </p>
+                    *@
                 </form>
             </div>
         </div>

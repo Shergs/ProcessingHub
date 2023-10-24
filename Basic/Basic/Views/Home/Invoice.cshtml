@@ -1,0 +1,142 @@
+﻿@model InvoiceViewModel
+@{
+    ViewData["Title"] = "Invoice";
+    var message = TempData["Message"] as string;
+    var messageType = TempData["MessageType"] as string;
+}
+
+<div class="tw-pt-16 tw-pb-20">
+    <div class="tw-p-4 tw-pt-8 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+        <div id="invoiceCard" class="tw-border tw-border-gray-400 tw-rounded-[16px] tw-shadow-lg" style="grid-column: span 12/span 12; grid-row: span 10/span 10;">
+            <div class="tw-w-full tw-h-full tw-mx-auto tw-my-8">
+                <!-- Toast Message -->
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div id="toast-message" class="tw-fixed tw-top-[77px] tw-right-4 @(messageType == "Success" ? "tw-bg-green-500" : "tw-bg-red-500") tw-text-white tw-px-4 tw-py-2 tw-rounded">
+                        @message
+                    </div>
+                }
+                <div class="tw-flex tw-flex-col tw-w-full tw-p-8 tw-bg-white tw-rounded-lg">
+                    <h2 class="tw-text-2xl tw-font-semibold tw-mb-4">Invoice</h2>
+                    <p><strong>Merchant:</strong> @Model.Merchant.Name</p>
+                    <p><strong>Address:</strong> @(Model.Merchant.StreetAddress), @(Model.Merchant.City), @(Model.Merchant.State), @(Model.Merchant.Zip), @(Model.Merchant.Country)</p>
+
+                    @using (Html.BeginForm("SendInvoice", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.SendInvoiceViewModel.MerchantId)
+
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SendInvoiceViewModel.FirstName, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SendInvoiceViewModel.FirstName, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md" })
+                            @Html.ValidationMessageFor(m => m.SendInvoiceViewModel.FirstName, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SendInvoiceViewModel.LastName, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SendInvoiceViewModel.LastName, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md" })
+                            @Html.ValidationMessageFor(m => m.SendInvoiceViewModel.LastName, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SendInvoiceViewModel.Email, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SendInvoiceViewModel.Email, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md" })
+                            @Html.ValidationMessageFor(m => m.SendInvoiceViewModel.Email, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+                        
+                        <div id="items-container"></div>
+                        <button type="button" id="add-item" class="tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-mt-4 tw-rounded-md hover:tw-bg-blue-800">Add Item</button>
+                        <!-- Repeat for other fields -->
+
+                        <div class="tw-mt-4">
+                            <button type="submit" class="tw-px-4 tw-py-2 tw-bg-blue-500 tw-text-white tw-rounded-md hover:tw-bg-blue-600">Send Invoice</button>
+                        </div>
+                    }
+                    <div id="item-template" class="item-fields tw-mt-4" style="display: none;">
+                        <div class="tw-grid tw-grid-cols-2 tw-gap-4">
+                            <input type="text" name="SendInvoiceViewModel.InvoiceItems[0].Item" class="item-input tw-border tw-p-2 tw-rounded-md tw-col-span-2" placeholder="Item" />
+                            <input type="number" step="any" name="SendInvoiceViewModel.InvoiceItems[0].Count" class="count-input tw-border tw-p-2 tw-rounded-md tw-col-span-1" placeholder="Count" />
+                            <input type="number" step="any" name="SendInvoiceViewModel.InvoiceItems[0].Price" class="price-input tw-border tw-p-2 tw-rounded-md tw-col-span-1" placeholder="Price" />
+                        </div>
+                        <button type="button" class="remove-item tw-bg-red-500 hover:tw-bg-red-800 tw-text-white tw-px-4 tw-py-2 tw-mt-2 tw-rounded-md">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // Remove the toast message after 5 seconds
+        setTimeout(() => {
+            document.getElementById('toast-message').remove();
+        }, 5000);
+    </script>
+
+    <script>
+        const invoiceCard = document.getElementById('invoiceCard');
+        let rowCount = 10; // Initial row count
+
+        function addItem() {
+            // Your existing logic for adding an item
+
+            // Increase row count by 2
+            rowCount += 3;
+            updateCardHeight();
+        }
+
+        function removeItem() {
+            // Your existing logic for removing an item
+
+            // Decrease row count by 2, but ensure it doesn't go below the initial value
+            rowCount = Math.max(10, rowCount - 3);
+            updateCardHeight();
+        }
+
+        function updateCardHeight() {
+            invoiceCard.style.gridRow = `span ${rowCount}/span ${rowCount}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let itemCount = 0;
+            const container = document.getElementById('items-container');
+            const template = document.getElementById('item-template');
+            const addItemButton = document.getElementById('add-item');
+
+            addItemButton.addEventListener('click', () => {
+                if (itemCount < 5) {
+                    const newItem = template.cloneNode(true);
+                    newItem.style.display = 'block';
+                    newItem.querySelectorAll('input').forEach(input => {
+                        input.name = input.name.replace('[0]', `[${itemCount}]`);
+                    });
+                    container.appendChild(newItem);
+                    itemCount++;
+                    addItem();
+                }
+                if (itemCount === 5) {
+                    addItemButton.disabled = true;
+                }
+            });
+
+            container.addEventListener('click', event => {
+                if (event.target.classList.contains('remove-item')) {
+                    const itemFields = event.target.closest('.item-fields');
+                    if (itemFields) {
+                        console.log('here');
+                        itemFields.remove();
+                        console.log('here2');
+                        itemCount--;
+                        removeItem();
+                        if (itemCount < 5) {
+                            addItemButton.disabled = false;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿@model SalesSettingsViewModel
+
+@{
+    ViewData["Title"] = "Sales Settings";
+    var message = TempData["Message"] as string;
+    var messageType = TempData["MessageType"] as string;
+}
+
+<div class="tw-pt-16 tw-pb-20">
+    <div class="tw-p-4 tw-pt-8 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+        <div id="salesSettingsCard" class="tw-border tw-border-gray-400 tw-rounded-[16px] tw-shadow-lg" style="grid-column: span 12/span 12; grid-row: span 10/span 10;">
+            <div class="tw-w-full tw-h-full tw-mx-auto tw-my-8">
+                <!-- Toast Message -->
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div id="toast-message" class="tw-fixed tw-top-[77px] tw-right-4 @(messageType == "Success" ? "tw-bg-green-500" : "tw-bg-red-500") tw-text-white tw-px-4 tw-py-2 tw-rounded">
+                        @message
+                    </div>
+                }
+                <div class="tw-flex tw-flex-col tw-w-full tw-p-8 tw-bg-white tw-rounded-lg">
+                    <h2 class="tw-text-2xl tw-font-semibold tw-mb-4">Sales Settings</h2>
+                    <p><strong>Merchant:</strong> @Model.Merchant.Name</p>
+                    <p><strong>Address:</strong> @(Model.Merchant.StreetAddress), @(Model.Merchant.City), @(Model.Merchant.State), @(Model.Merchant.Zip), @(Model.Merchant.Country)</p>
+                    @using (Html.BeginForm("SaveSalesSettings", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.SaveSalesSettingsViewModel.MerchantId)
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SaveSalesSettingsViewModel.TaxRate, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SaveSalesSettingsViewModel.TaxRate, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md", id = "TaxRate" })
+                            @Html.ValidationMessageFor(m => m.SaveSalesSettingsViewModel.TaxRate, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SaveSalesSettingsViewModel.FeeName, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SaveSalesSettingsViewModel.FeeName, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md", id = "FeeName" })
+                            @Html.ValidationMessageFor(m => m.SaveSalesSettingsViewModel.FeeName, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+
+                        <div class="tw-mt-4">
+                            @Html.LabelFor(m => m.SaveSalesSettingsViewModel.FeePercent, new { @class = "tw-block tw-text-sm tw-font-medium tw-text-gray-700" })
+                            @Html.TextBoxFor(m => m.SaveSalesSettingsViewModel.FeePercent, new { @class = "tw-mt-1 tw-p-2 tw-w-full tw-border tw-rounded-md", id = "FeePercent" })
+                            @Html.ValidationMessageFor(m => m.SaveSalesSettingsViewModel.FeePercent, "", new { @class = "tw-text-red-600 tw-text-sm" })
+                        </div>
+
+                        <div class="tw-mt-4">
+                            <button type="submit" class="tw-px-4 tw-py-2 tw-bg-blue-500 tw-text-white tw-rounded-md hover:tw-bg-blue-600">Save Settings</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        // Remove the toast message after 5 seconds
+        setTimeout(() => {
+            document.getElementById('toast-message').remove();
+        }, 5000);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("TaxRate").value = '@Model.Merchant.TaxRate.ToString()';
+            document.getElementById("FeeName").value = '@Model.Merchant.FeeName';
+            document.getElementById("FeePercent").value = '@Model.Merchant.FeePercent.ToString()';
+        });
+    </script>
+}
