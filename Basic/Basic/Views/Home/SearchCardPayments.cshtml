@@ -1,0 +1,45 @@
+﻿@using Humanizer
+@using Basic.Models
+@model CardPaymentTableViewModel
+
+
+@{
+    List<CardPayment> transactions = Model.CardPayments.ToList();
+}
+<div class="tw-pt-16 tw-pb-20">
+    <div class="tw-p-4 tw-pt-8 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+        <div id="salesSettingsCard" class="tw-border tw-border-gray-400 tw-rounded-[16px] tw-shadow-lg tw-p-4 tw-overflow-y-auto" style="grid-column: span 12/span 12; grid-row: span 10/span 10;">
+            <table class="table table-bordered table-hover rounded" id="myTable">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th class="col">Amount</th>
+                        <th class="col">Timestamp</th>
+                        <!-- Add more columns headers as necessary -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.CardPayments != null)
+                    {
+                        @foreach (var transaction in transactions)
+                        {
+                            <tr>
+                                <td>@transaction.Id</td>
+                                <td>@transaction.Amount</td>
+                                <td>@transaction.Timestamp</td>
+                                <!-- Display other properties of the transaction as required -->
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+}

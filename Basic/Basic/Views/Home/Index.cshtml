@@ -15,9 +15,12 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
 
+
 <div class="tw-pt-16 tw-pb-20">
     @if (ViewBag.Merchant != null)
     {
+        <a href="@Url.Action("SubmitPayment","Payment", new { Area = "" })"></a>
+
         <div class="tw-p-4 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
             @* Header Merchant Section *@
             <div class="tw-col-span-5 tw-row-span-2"></div>
@@ -31,8 +34,10 @@
                         <span class="tw-text-center tw-w-1/2">@ViewBag.Merchant.Zip</span>
                     </div>
                 </div>
+            </div> 
+            <div class="tw-col-span-5 tw-row-span-2">
+                <a href="@Url.Action("SubmitPayment","Payment", new { Area = "" })">Click Payment</a>
             </div>
-            <div class="tw-col-span-5 tw-row-span-2"></div>
 
             @* Sales Chart *@
             <div class="tw-col-span-6 tw-row-span-6 tw-border tw-border-gray-400 tw-rounded-[16px] tw-bg-white tw-shadow-lg">
@@ -137,7 +142,7 @@
                     <span class="tw-p-4 tw-w-[30%] tw-truncate">Card Payments</span>
                     <span class="tw-w-[23.5%]"></span>
                     <div class="tw-p-4 tw-w-[50.5%] tw-flex">
-                        <a href="/" class="tw-text-sm tw-text-blue-400 tw-pr-4">Search Card Payments</a>
+                        <a href="@Url.Action("SearchCardPayments","Home", new { Area = "" ,MerchantId = ViewBag.Merchant.Id})" class="tw-text-sm tw-text-blue-400 tw-pr-4">Search Card Payments</a>
                         <div date-rangepicker class="tw-flex tw-items-center">
                             <div class="tw-relative">
                                 <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-2 tw-pointer-events-none tw-cursor-pointer">
@@ -172,7 +177,7 @@
                     <span class="tw-p-4 tw-w-[30%] tw-truncate">Invoices</span>
                     <span class="tw-w-[38.5%]"></span>
                     <div class="tw-p-4 tw-w-[46.5%] tw-flex">
-                        <a href="/" class="tw-text-sm tw-text-blue-400 tw-pr-4">Search Invoices</a>
+                        <a href="@Url.Action("SearchInvoices","Home", new { Area = "" ,MerchantId = ViewBag.Merchant.Id})" class="tw-text-sm tw-text-blue-400 tw-pr-4">Search Invoices</a>
                         <div date-rangepicker class="tw-flex tw-items-center">
                             <div class="tw-relative">
                                 <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center tw-pl-2 tw-pointer-events-none tw-cursor-pointer">

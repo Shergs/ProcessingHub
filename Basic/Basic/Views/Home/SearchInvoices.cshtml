@@ -1,0 +1,53 @@
+﻿@using Humanizer
+@using Basic.Models
+@model InvoiceTableViewModel
+
+
+@{
+    List<Invoice> transactions = Model.Invoices.ToList();
+}
+<div class="tw-pt-16 tw-pb-20">
+    <div class="tw-p-4 tw-pt-8 tw-grid tw-auto-rows-[42px] tw-gap-5" style="grid-template-columns: repeat(12, minmax(0, 128px));">
+        <div id="salesSettingsCard" class="tw-border tw-border-gray-400 tw-rounded-[16px] tw-shadow-lg tw-p-4 tw-overflow-y-auto" style="grid-column: span 12/span 12; grid-row: span 10/span 10;">
+            <iframe src="https://chromedino.com/" frameborder="0" scrolling="no" width="100%" height="100%" loading="lazy"></iframe>
+            <style type="text/css">
+                iframe {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 999;
+                }</style>
+            <table class="table table-bordered table-hover rounded" id="myTable">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th class="col">Recipitent</th>
+                        <th class="col">Timestamp</th>
+                        <!-- Add more columns headers as necessary -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Invoices != null)
+                    {
+                        @foreach (var transaction in Model.Invoices)
+                        {
+                            <tr>
+                                <td>@transaction.Id</td>
+                                <td>@transaction.Email</td>
+                                <td>@transaction.Timestamp</td>
+                                <!-- Display other properties of the transaction as required -->
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+}

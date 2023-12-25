@@ -40,6 +40,11 @@ namespace Basic.Controllers
             _tempDataProvider = tempDataProvider ?? throw new ArgumentNullException(nameof(tempDataProvider));
         }
 
+        /// <summary>
+        /// Get Index / Dashboard page
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string? email)
         {
             ViewData ["UserID"] = _userManager.GetUserId(this.User);
@@ -61,8 +66,8 @@ namespace Basic.Controllers
             // set transactions
 
             IPagedList<Basic.Models.TransactionHistory>? transactions = merchant == null ? null : await Transactions(1, merchant.Id);
-            IPagedList<Basic.Models.CardPayment>? cardPayments = merchant == null ? null : await CardPayments(1, merchant.Id);
-            IPagedList<Basic.Models.Invoice>? invoices = merchant == null ? null : await Invoices(1, merchant.Id);
+            IPagedList<Basic.Models.CardPayment>? cardPayments = merchant == null ? null : await CardPayments(1, merchant.Id, 10);
+            IPagedList<Basic.Models.Invoice>? invoices = merchant == null ? null : await Invoices(1, merchant.Id, 10);
 
             DashboardViewModel model = new DashboardViewModel()
             { 
@@ -75,6 +80,11 @@ namespace Basic.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Get Invoice Page
+        /// </summary>
+        /// <param name="MerchantId"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Invoice(int MerchantId)
         {
             // email isn't selected anyways, so return without one
@@ -110,6 +120,67 @@ namespace Basic.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Get Search Card Payments Page
+        /// </summary>
+        /// <param name="MerchantId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> SearchCardPayments(int MerchantId)
+        {
+            // email isn't selected anyways, so return without one
+            if (MerchantId == -1)
+            {
+                return Redirect(Url.Action("Index", "Home", new { Area = "" }));
+            }
+
+            Merchant? merchant = await _context.Merchants.Where(m => m.Id == MerchantId).FirstOrDefaultAsync();
+
+            if (merchant == null)
+            {
+                return Redirect(Url.Action("Index", "Home", new { Area = "" }));
+            }
+            IPagedList<Basic.Models.CardPayment>? cardPayments = merchant == null ? null : await CardPayments(1, merchant.Id, 9999);
+            CardPaymentTableViewModel model = new CardPaymentTableViewModel()
+            {
+                CardPayments = cardPayments,
+                MerchantId = merchant.Id
+            };
+            return View(model);
+        }
+
+        /// <summary>
+        /// Get Search Invoices Page
+        /// </summary>
+        /// <param name="MerchantId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> SearchInvoices(int MerchantId)
+        {
+            // email isn't selected anyways, so return without one
+            if (MerchantId == -1)
+            {
+                return Redirect(Url.Action("Index", "Home", new { Area = "" }));
+            }
+
+            Merchant? merchant = await _context.Merchants.Where(m => m.Id == MerchantId).FirstOrDefaultAsync();
+
+            if (merchant == null)
+            {
+                return Redirect(Url.Action("Index", "Home", new { Area = "" }));
+            }
+            IPagedList<Basic.Models.Invoice>? invoices = merchant == null ? null : await Invoices(1, merchant.Id, 9999);
+            InvoiceTableViewModel model = new InvoiceTableViewModel()
+            {
+                Invoices = invoices,
+                MerchantId = merchant.Id
+            };
+            return View(model);
+        }
+
+        /// <summary>
+        /// Get Sales settings
+        /// </summary>
+        /// <param name="MerchantId"></param>
+        /// <returns></returns>
         public async Task<IActionResult> SalesSettings(int MerchantId)
         {
             // email isn't selected anyways, so return without one
@@ -330,6 +401,10 @@ namespace Basic.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        /// <summary>
+        /// Load merchants for the merchant select
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Merchant>> LoadMerchantsAsync()
         {
             List<Merchant> merchants = await _context.Merchants.ToListAsync();
@@ -357,9 +432,9 @@ namespace Basic.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        public async Task<IPagedList<Basic.Models.CardPayment>> CardPayments(int? page, int merchantId)
+        public async Task<IPagedList<Basic.Models.CardPayment>> CardPayments(int? page, int merchantId, int recordsPerPageInput)
         {
-            const int recordsPerPage = 10;
+            int recordsPerPage = recordsPerPageInput;
             var pageNumber = (page ?? 1);
 
             var transactions = _context.CardPayments.Where(th => th.MerchantId == merchantId).OrderByDescending(th => th.Timestamp).AsQueryable(); // No execution here
@@ -373,9 +448,10 @@ namespace Basic.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        public async Task<IPagedList<Basic.Models.Invoice>> Invoices(int? page, int merchantId)
+        public async Task<IPagedList<Basic.Models.Invoice>> Invoices(int? page, int merchantId, int recordsPerPageInput)
         {
-            const int recordsPerPage = 10;
+
+            int recordsPerPage = recordsPerPageInput;
             var pageNumber = (page ?? 1);
 
             var transactions = _context.Invoices.Where(th => th.MerchantId == merchantId).OrderByDescending(th => th.Timestamp).AsQueryable(); // No execution here
@@ -411,7 +487,7 @@ namespace Basic.Controllers
         [HttpGet]
         public async Task<IActionResult> PageCardPayments(int page, int merchantId)
         {
-            var transactions = await CardPayments(page, merchantId); // Assuming you have a method to get paged data
+            var transactions = await CardPayments(page, merchantId, 10); // Assuming you have a method to get paged data
             var viewModel = new CardPaymentTableViewModel
             {
                 CardPayments = transactions,
@@ -429,7 +505,7 @@ namespace Basic.Controllers
         [HttpGet]
         public async Task<IActionResult> PageInvoices(int page, int merchantId)
         {
-            var transactions = await Invoices(page, merchantId); // Assuming you have a method to get paged data
+            var transactions = await Invoices(page, merchantId, 10); // Assuming you have a method to get paged data
             var viewModel = new InvoiceTableViewModel
             {
                 Invoices = transactions,
@@ -564,7 +640,14 @@ namespace Basic.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Send Invoice Email with invoice PDF attached
+        /// </summary>
+        /// <param name="toEmail"></param>
+        /// <param name="receiptEmail"></param>
+        /// <param name="appPassword"></param>
+        /// <param name="htmlContent"></param>
+        /// <returns></returns>
         public async Task SendInvoiceEmailWithAttachmentAsync(string toEmail, string receiptEmail, string appPassword, string htmlContent)
         {
             // Save the HTML content to a temp file
